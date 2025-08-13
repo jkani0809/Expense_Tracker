@@ -1,0 +1,258 @@
+/* Pastel Green Theme for Dashboard */
+:root {
+    --pastel-green: #a8d5ba;
+    --pastel-green-dark: #8fc8a6;
+    --pastel-green-light: #d4e9dc;
+    --white: #ffffff;
+    --text-dark: #2f4f4f;
+    --green: #2e8b57;
+    --red: #d9534f;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--pastel-green-light);
+    margin: 0;
+    padding: 0;
+    color: var(--text-dark);
+}
+
+.dashboard-wrapper {
+    width: 100%;
+    background-color: var(--pastel-green-light);
+    padding: 20px 0;
+    min-height: 100vh; /* Fill full height */
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 0; /* Remove rounding if you want it flush with edges */
+    box-shadow: none; /* Optional: remove shadow if full bleed */
+    display: flex;
+    flex-direction: column;
+}
+
+
+header {
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    color: var(--pastel-green-dark);
+}
+
+header p {
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+.balance-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.balance-card {
+    background-color: var(--pastel-green);
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 220px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.balance-card:hover {
+    transform: translateY(-4px);
+}
+
+.balance-card h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.balance-card .amount {
+    font-size: 1.6rem;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.balance-card:first-child {
+    border: 2px solid var(--green);
+}
+
+.green {
+    color: var(--green);
+}
+
+.red {
+    color: var(--red);
+}
+
+.main-section {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-section,
+.table-section {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    min-width: 350px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h2,
+.table-section h2 {
+    margin-bottom: 15px;
+    color: var(--pastel-green-dark);
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid var(--pastel-green-dark);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+form button {
+    background-color: var(--pastel-green-dark);
+    color: var(--white);
+    border: none;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+}
+
+form button:hover {
+    background-color: var(--white);
+    color: var(--pastel-green-dark);
+    border: 1px solid var(--pastel-green-dark);
+}
+
+.table-section {
+    overflow-x: auto;
+}
+
+.table-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-section th,
+.table-section td {
+    border-bottom: 1px solid var(--pastel-green-dark);
+    padding: 10px;
+    text-align: left;
+}
+
+.table-section th {
+    background-color: var(--pastel-green);
+    color: var(--text-dark);
+}
+
+.table-section button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-right: 5px;
+}
+
+.table-section button:first-child {
+    background-color: var(--green);
+    color: var(--white);
+}
+
+.table-section button:last-child {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.table-section button:hover {
+    opacity: 0.85;
+}
+
+.filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.empty-msg {
+    text-align: center;
+    color: #777;
+}
+
+/* Tablet & Mobile */
+@media (max-width: 1024px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    .container {
+        padding: 20px;
+    }
+    .balance-card {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .balance-section {
+        flex-direction: column;
+    }
+    .main-section {
+        flex-direction: column;
+    }
+    .form-section {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+        margin: 0;
+        border-radius: 0;
+    }
+    .balance-card .amount {
+        font-size: 1.4rem;
+    }
+    form button {
+        font-size: 0.95rem;
+    }
+    .table-section table {
+        font-size: 0.85rem;
+    }
+}

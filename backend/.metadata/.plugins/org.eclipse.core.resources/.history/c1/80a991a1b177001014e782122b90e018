@@ -1,0 +1,33 @@
+package com.example.backend.service;
+
+import com.example.backend.model.User;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class DataService {
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    private List<User> readUsersFrom(String filename) throws IOException {
+        InputStream is = getClass().getClassLoader().getResourceAsStream(filename);
+        if (is == null) {
+            throw new IOException(filename + " not found in resources");
+        }
+        Map<String, List<User>> map = mapper.readValue(is, new TypeReference<>() {});
+        return map.get("users");
+    }
+
+    public List<User> getUsersFromDb() throws IOException {
+        return readUsersFrom("db.json");
+    }
+
+    public List<User> getUsersFromDetails() throws IOException {
+        return readUsersFrom("details.json");
+    }
+}

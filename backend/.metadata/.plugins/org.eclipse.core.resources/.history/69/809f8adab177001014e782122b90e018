@@ -1,0 +1,97 @@
+package com.example.backend.controller;
+
+import com.example.backend.model.User;
+import com.example.backend.model.DashboardItem;
+import com.example.backend.service.DataService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.*;
+
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000") // Allow React frontend
+public class ApiController {
+
+    private final DataService dataService;
+
+    public ApiController(DataService dataService) {
+        this.dataService = dataService;
+    }
+
+    // ---------- USERS ----------
+
+    @GetMapping("/users")
+    public List<User> getUsers() throws IOException {
+        return dataService.getUsersFromDb();
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<User> createUser(@RequestBody User newUser) throws IOException {
+        List<User> users = dataService.getUsersFromDb();
+
+        if (newUser.getUserid() == null || newUser.getUserid().isEmpty()) {
+            newUser.setUserid(UUID.randomUUID().toString());
+        }
+        newUser.setCreatedAt(new Date().toString());
+
+        users.add(newUser);
+        dataService.saveUsersToDb(users);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User loginUser) throws IOException {
+        List<User> users = dataService.getUsersFromDb();
+        for (User u : users) {
+            if (u.getUsername().equals(loginUser.getUsername()) &&
+                u.getPassword().equals(loginUser.getPassword())) {
+                return ResponseEntity.ok(u);
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+    }
+
+    // ---------- DETAILS ----------
+
+    @GetMapping("/details")
+    public List<DashboardItem> getDetails() throws IOException {
+        return dataService.getDetailsFromDb();
+    }
+
+    @PostMapping("/details")
+    public ResponseEntity<DashboardItem> addDetail(@RequestBody DashboardItem item) throws IOException {
+        List<DashboardItem> details = dataService.getDetailsFromDb();
+        item.setId(UUID.randomUUID().toString());
+        item.setDate(new Date().toString());
+        details.add(item);
+        dataService.saveDetailsToDb(details);
+        return ResponseEntity.status(HttpStatus.CREATED).body(item);
+    }
+
+    @PutMapping("/details/{id}")
+    public ResponseEntity<DashboardItem> updateDetail(@PathVariable String id, @RequestBody DashboardItem updated) throws IOException {
+        List<DashboardItem> details = dataService.getDetailsFromDb();
+        for (int i = 0; i < details.size(); i++) {
+            if (details.get(i).getId().equals(id)) {
+                updated.setId(id);
+                updated.setDate(details.get(i).getDate());
+                details.set(i, updated);
+                dataService.saveDetailsToDb(details);
+                return ResponseEntity.ok(updated);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/details/{id}")
+    public ResponseEntity<Void> deleteDetail(@PathVariable String id) throws IOException {
+        List<DashboardItem> details = dataService.getDetailsFromDb();
+        details.removeIf(t -> t.getId().equals(id));
+        dataService.saveDetailsToDb(details);
+        return ResponseEntity.noContent().build();
+    }
+}

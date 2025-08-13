@@ -1,0 +1,56 @@
+package com.example.backend.service;
+
+import com.example.backend.model.User;
+import com.example.backend.model.DashboardItem;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class DataService {
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final Path userFile = Paths.get("data/db.json");
+    private final Path detailsFile = Paths.get("data/details.json");
+
+    public DataService() throws IOException {
+        if (!Files.exists(userFile.getParent())) {
+            Files.createDirectories(userFile.getParent());
+        }
+        if (!Files.exists(userFile)) {
+            Files.write(userFile, "{\"users\":[]}".getBytes());
+        }
+        if (!Files.exists(detailsFile)) {
+            Files.write(detailsFile, "[]".getBytes());
+        }
+    }
+
+    // ===== USERS =====
+    public List<User> getUsersFromDb() throws IOException {
+        Map<String, List<User>> data = mapper.readValue(
+                userFile.toFile(),
+                new TypeReference<Map<String, List<User>>>() {}
+        );
+        return data.getOrDefault("users", List.of());
+    }
+
+    public void saveUsersToDb(List<User> users) throws IOException {
+        Map<String, List<User>> wrapper = new HashMap<>();
+        wrapper.put("users", users);
+        mapper.writerWithDefaultPrettyPrinter().writeValue(userFile.toFile(), wrapper);
+    }
+
+    // ===== DETAILS =====
+    public List<DashboardItem> getDetailsFromDb() throws IOException {
+        return mapper.readValue(detailsFile.toFile(), new TypeReference<List<DashboardItem>>() {});
+    }
+
+    public void saveDetailsToDb(List<DashboardItem> details) throws IOException {
+        mapper.writerWithDefaultPrettyPrinter().writeValue(detailsFile.toFile(), details);
+    }
+}

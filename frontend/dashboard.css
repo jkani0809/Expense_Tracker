@@ -1,0 +1,149 @@
+/* Pastel Green Theme for Dashboard */
+:root {
+    --pastel-green: #a8d5ba;
+    --pastel-green-dark: #8fc8a6;
+    --pastel-green-light: #d4e9dc;
+    --white: #ffffff;
+    --text-dark: #2f4f4f;
+    --green: #2e8b57;
+    --red: #d9534f;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--pastel-green-light);
+    margin: 0;
+    padding: 0;
+    color: var(--text-dark);
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: var(--pastel-green-dark);
+}
+
+header p {
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+.balance-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.balance-card {
+    background-color: var(--pastel-green);
+    padding: 15px;
+    border-radius: 10px;
+    flex: 1;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.balance-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.balance-card .amount {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.green {
+    color: var(--green);
+}
+
+.red {
+    color: var(--red);
+}
+
+.main-section {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-section, .table-section {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h2, .table-section h2 {
+    margin-bottom: 15px;
+    color: var(--pastel-green-dark);
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid var(--pastel-green-dark);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+form button {
+    background-color: var(--pastel-green-dark);
+    color: var(--white);
+    border: none;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+form button:hover {
+    background-color: var(--white);
+    color: var(--pastel-green-dark);
+    border: 1px solid var(--pastel-green-dark);
+}
+
+.table-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-section th, .table-section td {
+    border-bottom: 1px solid var(--pastel-green-dark);
+    padding: 10px;
+    text-align: left;
+}
+
+.table-section th {
+    background-color: var(--pastel-green);
+    color: var(--text-dark);
+}
+
+.empty-msg {
+    text-align: center;
+    color: #777;
+}

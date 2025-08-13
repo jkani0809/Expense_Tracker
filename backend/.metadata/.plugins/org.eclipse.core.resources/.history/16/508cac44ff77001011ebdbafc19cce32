@@ -1,0 +1,37 @@
+package com.example.backend.service;
+
+import com.example.backend.model.User;
+import com.example.backend.model.DashboardItem;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.core.io.ClassPathResource;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+@Service
+public class DataService {
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    public List<User> getUsersFromDb() throws IOException {
+        File file = new ClassPathResource("db.json").getFile();
+        return mapper.readValue(file, new TypeReference<>() {});
+    }
+
+    public void saveUsersToDb(List<User> users) throws IOException {
+        File file = new ClassPathResource("db.json").getFile();
+        mapper.writerWithDefaultPrettyPrinter().writeValue(file, users);
+    }
+
+    public List<DashboardItem> getDetailsFromDb() throws IOException {
+        File file = new ClassPathResource("details.json").getFile();
+        return mapper.readValue(file, new TypeReference<>() {});
+    }
+
+    public void saveDetailsToDb(List<DashboardItem> details) throws IOException {
+        File file = new ClassPathResource("details.json").getFile();
+        mapper.writerWithDefaultPrettyPrinter().writeValue(file, details);
+    }
+}
